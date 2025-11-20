@@ -18,7 +18,7 @@ const matchPairedEmojis = [
   ["🌧️", "💃", "Rain Dance"],
   ["🌮", "🛎️", "Taco Bell"],
   ["🐍", "👀", "Snake Eyes"],
-  ["🌽", "🍞", " CornBread"]
+  ["🚫", "🚬", "No Smoking"]
 ];
 
 let matchedPairs = [];
@@ -114,7 +114,7 @@ function createGame() {
     const draw = document.createElement('div');
     draw.className = 'hidden-draw';
     draw.textContent = totalDraw[i];
-    draw.setAttribute('data-pair', i);
+    draw.setAttribute('pair', i);
     draw.addEventListener('click', flickEmoji);
     gameBoard.appendChild(draw);
   }
@@ -175,7 +175,7 @@ const combo = twin1
   if (isMate) {
     console.log('MATCH!', '🥳');
     phraseDisplay.textContent = `🥳 ${combo}! You got this! Keep Going!`;
-    phraseDisplay.style.color = 'rgba(16, 239, 24, 1)';
+    phraseDisplay.style.color = '#000000';
 
     matchedPairs.push(combo);
     gamerPoints[ogPlayerIdx]++;
@@ -197,6 +197,8 @@ const combo = twin1
     console.log('Oops! Try Again🙁');
     phraseDisplay.textContent = 'Oops! Try Again 🙁';
     phraseDisplay.style.color = 'rgba(247, 4, 4, 1)';
+
+    const delayflick = pcShot ? 2000 : 1000;
 
     setTimeout(() => {
       primeDraw.classList.remove('flicked');
@@ -300,11 +302,11 @@ function endGameAction() {
   console.log(`${victor} Won!`);
 
   const challengerName = viewPlayMode === 'pc' ? 'pc' : 'supplemntGamer';
-  runInput.textContent = `Game Done! ${victor}Won! (primeGamer: ${prime1tally}, ${challengerName}: ${supplemnt2Tally})`;
+  runInput.textContent = `Game Done! ${victor}Won! (Mind: ${prime1tally}, ${challengerName}: ${supplemnt2Tally})`;
 }
 
 function pcMove() {
-  const gamePiece = document.querySelectorAll('#hidden.draw:not(.mate)');
+  const gamePiece = document.querySelectorAll('.hidden.draw:not(.mate)');
   const reversePiece = Array.from(gamePiece).filter(
     (draw) => !draw.classList.contains('flicked')
   );
@@ -323,16 +325,29 @@ function pcMove() {
   const draw2 = leftOver[shuffleBasedIdx2];
 
   beginTime();
+
+
+  setTimeout(() => {
   draw1.classList.add('flicked');
   primeDraw = draw1;
+  console.log('pc flick:', draw1.textContent);
+  }, 500);
+
+    setTimeout(() => {
+  draw2.classList.add('flicked');
+  primeDraw = draw2;
+  console.log('pc flick:', draw2.textContent);
+  }, 1500);
 
   setTimeout(() => {
     draw2.classList.add('flicked');
     supplemntDraw = draw2;
     diagnosis();
     pcShot = false;
-  }, 1500);
+  }, 2000);
+
 }
+
 function reboot() {
   matchedPairs = [];
   usedMoves = [];
@@ -344,6 +359,7 @@ function reboot() {
   ogPlayerIdx = 0;
   endGame = false;
   pcShot = false;
+  viewPlayMode = null
 
   clearInterval(timeSpell);
 
@@ -352,18 +368,18 @@ function reboot() {
     totalDraw.push(match[0]);
     totalDraw.push(match[1]);
   }
-}
     totalDraw.sort(() => Math.random() - 0.5);
 
-    
-    createGame();
-    displayGamerMove();
     displayTimer.textContent = '0';
+    phraseDisplay.textContent = '';
+    phraseDisplay.style.color = '';
     matches.textContent = 'Matches: 0';
+    
 
+    displayViewPlayMode();
 
     console.log('Match Reboot');
-  
+}
 const rebootBtn = document.querySelector('#rebootBtn')
 if(rebootBtn) {  
   rebootBtn.addEventListener('click', reboot);

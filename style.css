@@ -8,7 +8,7 @@
 }
 
 body {
-    background: #1c87df;
+    background: #3477db;
     text-align: center;
     padding: 20px
 
@@ -23,7 +23,7 @@ h1 {
 h2 {
     font-size: 18px;
     margin-bottom: 20px;
-    color: #0d0d0d;
+    color: #000;
 }
 #phrase-display {
     display: flex;
@@ -32,7 +32,7 @@ h2 {
     min-height: 0px;
     margin-bottom: 0px;
     color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px #0000004d;
 }
 
 #rebootBtn {
@@ -43,7 +43,7 @@ h2 {
     border-radius: 10px;
     cursor: pointer;
     margin-bottom: 10px;
-    box-shadow: 0 0 8 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 8 #0000001a;
     transition:  transform 0.2s ease, background 0.2s ease;
 }
 
@@ -56,17 +56,17 @@ h2 {
     padding: 10px 15px;
     border-radius: 10px;
     background: #eff304;
-    box-shadow: 0 0 8px rgba (0, 0, 0, 0.1);
+    box-shadow: 0 0 8px #0000001a;
     position: right;
 }
 
 #key {
-    background: rgba(239, 166, 7, 0.9);
+    background: #efa607e6;
     border-radius: 15px;
     padding: 10px 10px;
     margin: 8px auto;
     max-width: 650px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px #0000004d;
     
     
 }
@@ -112,7 +112,7 @@ h2 {
 
 #board {
     display: grid;
-    grid-template-columns: repeat(6, 60px);
+    grid-template-columns: repeat(8, 60px);
     gap: 15px;
     justify-content: center;
     margin: 0 auto 0;
@@ -122,10 +122,10 @@ h2 {
 .hidden-draw {
     width: 50px;
     height: 50px;
-    background: hsl(60, 17%, 98%);
+    background: #fbfbf9;
     border-radius: 50px;
-    border: 2px solid rgb(55, 176, 82);
-    box-shadow: 0 0 8px rgba(0,0,0,0.08);
+    border: 2px solid #1f201f;
+    box-shadow: 0 0 8px #00000014;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,12 +141,12 @@ h2 {
 
 .hidden-draw.flicked {
     transform:  scale(1.07);
-    background: #f2db6a;
-    color: rgb(237, 231, 72);
+    background: #ede748;
+    color: #ede748;
 }
 
 .hidden-draw.mate {
-    background: #d3ffd3 !important;
+    background: #8bd98b !important;
     border-color: #8bd98b !important;
 }
 
