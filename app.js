@@ -14,6 +14,11 @@ const matchPairedEmojis = [
   ["👶", "🚿", "Baby Shower"],
   ["📰", "⚓️", "News Anchor"],
   ["📞", "🏠", "Phone Home"],
+  ["☁️","9️⃣", "Cloud Nine"],
+  ["🌧️", "💃", "Rain Dance"],
+  ["🌮", "🛎️", "Taco Bell"],
+  ["🐍", "👀", "Snake Eyes"],
+  ["🌽", "🍞", " CornBread"]
 ];
 
 let matchedPairs = [];
@@ -42,17 +47,17 @@ for (let pair of matchPairedEmojis) {
 
 totalDraw.sort(() => Math.random() - 0.5);
 
-const gameBoard = document.getElementById('board');
-const displayTimer = document.getElementById('timer');
-const moveValue = document.getElementById('moves');
-const matches = document.getElementById('match');
-const runInput = document.getElementById('runInput');
-const rebootMatch = document.getElementById('rebootBtn');
-const phraseDisplay = document.getElementById('phrase-display');
+const gameBoard = document.querySelector('#board');
+const displayTimer = document.querySelector('#timer');
+const moveValue = document.querySelector('#moves');
+const matches = document.querySelector('#match');
+const runInput = document.querySelector('#runInput');
+const rebootMatch = document.querySelector('#rebootBtn');
+const phraseDisplay = document.querySelector('#phrase-display');
 
 
 function mateKey() {
-  const keyMateBin = document.getElementById('key-combos');
+  const keyMateBin = document.querySelector('#key-combos');
   keyMateBin.innerHTML = '';
 
   matchPairedEmojis.forEach((duo) => {
@@ -68,14 +73,14 @@ function mateKey() {
 }
 function init() {
   console.log('Pair it to win it", "Game Ready!');
-
+  displayViewPlayMode();
   mateKey();
 }
 
 function displayViewPlayMode() {
- const vibeSwitchboard = document.getElementById('vibe-switchboard');
- const brainBtn = document.getElementById('mind-challenger');
- const bitsBytesBtn = document.getElementById('bitsbytes-pc');
+ const vibeSwitchboard = document.querySelector('#vibe-switchboard');
+ const brainBtn = document.querySelector('#mind-challenger');
+ const bitsBytesBtn = document.querySelector('#bitsbytes-pc');
 
  vibeSwitchboard.classList.remove('hidden');
 
@@ -105,14 +110,14 @@ function beginGame() {
 function createGame() {
   gameBoard.innerHTML = '';
 
-//   for (let i = 0; i < totalDraw.length; i++) {
-//     const draw = document.createElement('div');
-//     draw.className = 'draw';
-//     draw.textContent = totalDraw[i];
-//     draw.setAttribute('pair', i);
-//     draw.addEventListener('click', flickEmoji);
-//     gameBoard.appendChild(draw);
-//   }
+  for (let i = 0; i < totalDraw.length; i++) {
+    const draw = document.createElement('div');
+    draw.className = 'hidden-draw';
+    draw.textContent = totalDraw[i];
+    draw.setAttribute('data-pair', i);
+    draw.addEventListener('click', flickEmoji);
+    gameBoard.appendChild(draw);
+  }
 }
 
 function getMate(emoji) {
@@ -299,14 +304,16 @@ function endGameAction() {
 }
 
 function pcMove() {
-  const gamePiece = document.querySelectorAll(".draw:not(.mate)");
+  const gamePiece = document.querySelectorAll('#hidden.draw:not(.mate)');
   const reversePiece = Array.from(gamePiece).filter(
     (draw) => !draw.classList.contains('flicked')
   );
 
   if (reversePiece.length < 2) {
     pcShot = false;
+    nxtPlayer();
     return;
+  
   }
   const shuffleBasedIdx = Math.floor(Math.random() * reversePiece.length);
   const draw1 = reversePiece[shuffleBasedIdx];
@@ -344,21 +351,22 @@ function reboot() {
   for (let match of matchPairedEmojis) {
     totalDraw.push(match[0]);
     totalDraw.push(match[1]);
-
+  }
+}
     totalDraw.sort(() => Math.random() - 0.5);
 
+    
     createGame();
     displayGamerMove();
     displayTimer.textContent = '0';
-    modeContent.textContent = 'Modes: 0';
-    phraseDisplay.textContent = 'Match Reboot';
+    matches.textContent = 'Matches: 0';
+
 
     console.log('Match Reboot');
-  }
-}
-const rebootBtn = document.getElementById('rebootBtn')
+  
+const rebootBtn = document.querySelector('#rebootBtn')
 if(rebootBtn) {  
-  rebootBtn.addEventListener('click', rebootMatch);
+  rebootBtn.addEventListener('click', reboot);
 }
 
 init();
