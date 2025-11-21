@@ -52,5 +52,5 @@ using emojis...**IYKYK!!** **Muy Caliente′!!!** 😜🥵🌶️ For couples to
 communicate and have a lil fun together. With my background in health and wellness, I'm
 all about helping people bond in enjoyable ways, because when something feels fun, it 
 doesn'y neccessarily feel like work. I still plan on bringing the idea to fruition with
-interactive features, animations, music and maybe evenlevels for dating couples, long 
+interactive features, animations, music and maybe even levels for dating couples, long 
 term partners and married pros. The sky is the limit, I'm excited to see where it goes!
