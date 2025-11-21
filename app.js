@@ -196,7 +196,7 @@ const combo = twin1
         setTimeout(() => {
           pcShot = true;
           pcMove()
-        }, 2000);
+        }, 2500);
     } else if (pcShot) {
       pcShot = false;   
     }
