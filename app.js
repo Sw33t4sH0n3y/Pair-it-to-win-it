@@ -174,6 +174,7 @@ const combo = twin1
 
   if (isMate) {
     console.log('MATCH!', '🥳');
+    const prsntGamer = ogPlayerIdx ===0 ? primeDraw : (viewPlayMode === "pc" ? "Pc" : supplemntDraw);
     phraseDisplay.textContent = `🥳 ${combo}! You got this! Keep Going!`;
     phraseDisplay.style.color = '#000000';
 
@@ -194,15 +195,22 @@ const combo = twin1
     }
     setTimeout(() => {
       phraseDisplay.textContent = '';
-    }, 2000);
+    }, 1500);
 
     confirmEnd();
+
+    if(!gameDone) {
+      if (viewPlayMode === 'pc' && ogPlayerIdx === 1) {
+        pcShot = true;
+        setTimeout(pcMove, 2000);
+      }
+    }
   } else {
     console.log('Oops! Try Again🙁');
     phraseDisplay.textContent = 'Oops! Try Again 🙁';
     phraseDisplay.style.color = '#1f0404ff';
 
-    const delayflick = pcShot ? 2000 : 1000;
+    const delayflick = pcShot ? 1500 : 1000;
 
     setTimeout(() => {
 
