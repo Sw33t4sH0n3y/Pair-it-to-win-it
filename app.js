@@ -143,14 +143,11 @@ function flickEmoji(event) {
   }
 
   quickDraw.classList.add('flicked');
-  console.log('Flicked Draw', quickDraw.textContent);
 
   if (primeDraw === null) {
     primeDraw = quickDraw;
-    console.log('Primary Draw:', primeDraw.textContent);
   } else if (supplemntDraw === null) {
     supplemntDraw = quickDraw;
-    console.log('Supplement Draw:', supplemntDraw.textContent);
     diagnosis();
   }
 }
@@ -342,7 +339,6 @@ function pcMove() {
 
     draw1.classList.add('flicked');
     primeDraw = draw1;
-    console.log('pc flick:', draw1.textContent);
 
     beginTime();
 
@@ -350,7 +346,6 @@ function pcMove() {
     draw2.classList.add('flicked');
   if (draw2) {  
     supplemntDraw= draw2;
-    console.log('pc flick2:', draw2.textContent);
     
   setTimeout(() => {
     diagnosis();
