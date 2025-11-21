@@ -185,15 +185,21 @@ const combo = twin1
     inquiry = false;
     halt();
 
-    if (pcShot) {
-    pcShot = false
-
-    }
     setTimeout(() => {
       phraseDisplay.textContent = '';
     }, 2000);
 
     confirmEnd();
+
+    if (!gameDone && viewPlayMode === 'pc' && ogPlayerIdx === 1) {
+        pcShot = false;
+        setTimeout(() => {
+          pcShot = true;
+          pcMove()
+        }, 2000);
+    } else if (pcShot) {
+      pcShot = false;   
+    }
   } else {
     console.log('Oops! Try Again🙁');
     phraseDisplay.textContent = 'Oops! Try Again 🙁';
