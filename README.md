@@ -38,8 +38,12 @@ Since I see the bigger picture before I see the steps on how to get there, I'm a
 looking for ways to break things down to comprehend them better. This **YouTube** video
 on flowcharts really helped me make the coding experience a lil bit easier. Of course the 
 **MDN** website is my new go to, to play around with different functions and correct syntax.
-The **Flex-Box** website was also very useful. I used _javaScript_, _HTML_ and _CSS._
+The **Flex-Box** website was also very useful. 
 
+* JS
+* HTML
+* CSS
+  
 [YouTube](https://youtu.be/C2foxBRpXo0?si=Ij7YIBp2_0vmh1Fh)
 [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions)
 [Flex-Box](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
