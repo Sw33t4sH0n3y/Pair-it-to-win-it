@@ -37,12 +37,12 @@ h2 {
 
 #rebootBtn {
     padding: 10px 24px;
-    font-size: 16px;
+    font-size: 17px;
     background: #d06254;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin: 10px;
     box-shadow: 0 0 8 #0000001a;
     transition:  transform 0.2s ease, background 0.2s ease;
 }
@@ -154,7 +154,7 @@ h2 {
     transform: scale(1.04);
 }
 
-.modal {
+#vibe-switchboard {
     top: 0;
     left: 0;
     width: 100%;
@@ -166,18 +166,28 @@ h2 {
     z-index: 100;
 }
 
-.modal.hidden {
+#vibe-switchboard.hidden {
     display: none;
 }
 
-.modal.content {
+#vibe-switchboard .modal.content {
     background:white;
-    padding: 40px;
-    border-radius: 20px;
+    padding: 10px 24px;
+    border-radius: 10px;
     text-align: center;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 } 
 .mode.btn:hover {
     transform: scale(1.05);
     background: #b8cd6d;
+}
+.brain-btn, .bitsbytes-btn {
+    background: #d06254;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 24px;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 10px;
+    
 }

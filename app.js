@@ -188,6 +188,10 @@ const combo = twin1
     inquiry = false;
     halt();
 
+    if (pcShot) {
+    pcShot = false
+
+    }
     setTimeout(() => {
       phraseDisplay.textContent = '';
     }, 2000);
@@ -196,24 +200,35 @@ const combo = twin1
   } else {
     console.log('Oops! Try Again🙁');
     phraseDisplay.textContent = 'Oops! Try Again 🙁';
-    phraseDisplay.style.color = 'rgba(247, 4, 4, 1)';
+    phraseDisplay.style.color = '#1f0404ff';
 
     const delayflick = pcShot ? 2000 : 1000;
 
     setTimeout(() => {
+
+    if (primeDraw)  {
       primeDraw.classList.remove('flicked');
+    }    
+    if (supplemntDraw) {
       supplemntDraw.classList.remove('flicked');
+    }
+
       primeDraw = null;
       supplemntDraw = null;
       inquiry = false;
       halt();
       usedMoves.push(1);
+
+      phraseDisplay.textContent = '';
+
+if (pcShot) {
+    pcShot = false
+}
       nxtPlayer();
       confirmEnd();
-    }, 1000);
+    }, delayflick);      
   }
 }
-
 function beginTime() {
   remainTime = maxTimePerTurn;
   displayTimer.textContent = remainTime;
@@ -235,10 +250,10 @@ function timeEnds() {
   console.log('Too Slow! You gotta be faster Champ!');
 
   if (primeDraw) {
-    primeDraw.classList.toggle('flicked');
+    primeDraw.classList.remove('flicked');
   }
   if (supplemntDraw) {
-    supplemntDraw.classList.toggle('flicked');
+    supplemntDraw.classList.remove('flicked');
   }
 
   primeDraw = null;
@@ -306,7 +321,7 @@ function endGameAction() {
 }
 
 function pcMove() {
-  const gamePiece = document.querySelectorAll('.hidden.draw:not(.mate)');
+  const gamePiece = document.querySelectorAll('.hidden-draw:not(.mate)');
   const reversePiece = Array.from(gamePiece).filter(
     (draw) => !draw.classList.contains('flicked')
   );
@@ -317,6 +332,7 @@ function pcMove() {
     return;
   
   }
+
   const shuffleBasedIdx = Math.floor(Math.random() * reversePiece.length);
   const draw1 = reversePiece[shuffleBasedIdx];
 
@@ -324,28 +340,24 @@ function pcMove() {
   const shuffleBasedIdx2 = Math.floor(Math.random() * leftOver.length);
   const draw2 = leftOver[shuffleBasedIdx2];
 
-  beginTime();
+    draw1.classList.add('flicked');
+    primeDraw = draw1;
+    console.log('pc flick:', draw1.textContent);
 
-
-  setTimeout(() => {
-  draw1.classList.add('flicked');
-  primeDraw = draw1;
-  console.log('pc flick:', draw1.textContent);
-  }, 500);
-
-    setTimeout(() => {
-  draw2.classList.add('flicked');
-  primeDraw = draw2;
-  console.log('pc flick:', draw2.textContent);
-  }, 1500);
+    beginTime();
 
   setTimeout(() => {
     draw2.classList.add('flicked');
-    supplemntDraw = draw2;
+  if (draw2) {  
+    supplemntDraw= draw2;
+    console.log('pc flick2:', draw2.textContent);
+    
+  setTimeout(() => {
     diagnosis();
-    pcShot = false;
-  }, 2000);
 
+    }, 1500);
+   }
+  }, 1500); 
 }
 
 function reboot() {
@@ -370,12 +382,14 @@ function reboot() {
   }
     totalDraw.sort(() => Math.random() - 0.5);
 
+
     displayTimer.textContent = '0';
     phraseDisplay.textContent = '';
     phraseDisplay.style.color = '';
+    runInput.textContent = '';
     matches.textContent = 'Matches: 0';
     
-
+    createGame();
     displayViewPlayMode();
 
     console.log('Match Reboot');
