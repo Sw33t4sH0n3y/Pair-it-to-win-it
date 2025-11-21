@@ -23,7 +23,7 @@ patterns, all of which support overall mental sharpness and development.
 ## Background
 
 I chose this game simply because, coming in with absolutely no experience in 
-coding, I weighed my option and picked what i thought would be a simple exercise.
+coding, I weighed my options and picked what I thought would be a simple exercise.
 ***Spoiler Alert***... it was hard as **F*!** There were moments when I literally
 wanted to hurl my iMac through the wall, moments of anxiety, which for me means 
 itching fits! However, through the guidance of the awesome teachers and my peers 
