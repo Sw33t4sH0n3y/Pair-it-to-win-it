@@ -1,3 +1,40 @@
+const emoJis = ['🌈', '🦊', '🐝', '🚚', '✨','🌸', '🛑', '🌜', '🐥', '☀️'];
+
+function waterMark() {
+  const wmark = document.createElement('div');
+  wmark.className = 'wmark';
+  wmark.textContent = emoJis[Math.floor(Math.random()* emoJis.length)];
+  
+  wmark.style.left = Math.random() * 100 + '%';
+  wmark.style.animationDelay = Math.random() * 20 + 's';
+  wmark.style.animationDuration = (15 + Math.random() * 10) + 's';
+
+  return wmark
+}
+
+const wmarkContainer = document.querySelector('#wmark-container');
+const numOfWmarks = 10;
+
+for (let i = 0; i < numOfWmarks; i++) {
+  wmarkContainer.appendChild(waterMark());
+}
+
+setInterval(() => {
+  if (wmarkContainer.children.length < 20) {
+    wmarkContainer.appendChild(waterMark());
+  }
+}, 3000);
+
+setInterval(() => {
+  const wmarks = wmarkContainer.querySelectorAll('.wmark');
+  wmarks.forEach(w => {
+    const rect = w.getBoundingClientRect();
+    if (rect.top < -100) {
+      w.remove();
+    }
+  });
+}, 5000);
+
 let pcMedulla = {};
 
 const matchPairedEmojis = [

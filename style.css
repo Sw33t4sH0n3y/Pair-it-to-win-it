@@ -8,16 +8,63 @@
 }
 
 body {
-    background: #3477db;
-    text-align: center;
-    padding: 20px
+min-height: 100vh;
+text-align: center;
+padding: 20px;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #688dd6 50%, #8e3707 75%, #4facfe 100%);
+background-size: 400% 400%;
+animation: gradientShift 15s ease infinite;
+position: relative;
+overflow-x: hidden;
+}
 
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10%, 90% {
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+.wmark-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+.wmark {
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0.1;
+    user-select: none;
+    animation: float 20s infinite linear;
+}
+.modal.content {
+    position: relative;
+    z-index: 2;
+    padding: 50px;
+    text-align: center;
+    color: white;
 }
 
 h1 {
     font-size: 28px;
     margin-bottom: 10px;
-
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
@@ -25,6 +72,14 @@ h2 {
     margin-bottom: 20px;
     color: #000;
 }
+
+p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
 #phrase-display {
     display: flex;
     font-size: 24px;
@@ -35,7 +90,24 @@ h2 {
     text-shadow: 2px 2px 4px #0000004d;
 }
 
-#rebootBtn {
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 20px;
+    margin-bottom: 20px;
+
+}
+#moves, #timer, #runInput, #match {
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: #eff304;
+    box-shadow: 0 0 8px #0000001a;
+}
+
+#rebootBtn,
+.brain-btn, 
+.bitsbytes-btn {
     padding: 10px 24px;
     font-size: 17px;
     background: #d06254;
@@ -47,21 +119,18 @@ h2 {
     transition:  transform 0.2s ease, background 0.2s ease;
 }
 
-#rebootBtn:hover {
+#rebootBtn:hover,
+.brain-btn:hover, 
+.bitsbytes-btn:hover,
+.mode.btn:hover {
     transform: scale(1.05);
     background: #b8cd6d;
 }
 
-#moves, #timer, #runInput, #match {
-    padding: 10px 15px;
-    border-radius: 10px;
-    background: #eff304;
-    box-shadow: 0 0 8px #0000001a;
-    position: right;
-}
+
 
 #key {
-    background: #efa607e6;
+    background: #f9f8f6e6;
     border-radius: 15px;
     padding: 10px 10px;
     margin: 8px auto;
@@ -80,9 +149,14 @@ h2 {
     flex-wrap: wrap;
     gap: 15px;
     justify-content: center;
-    box-sizing: content-box;
 }
 
+#key-combo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
 .key-combo {
     display: flex;
     align-items: center;
@@ -101,14 +175,6 @@ h2 {
     color: #0d0d0d;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    font-size: 20px;
-    margin-bottom: 20px;
-
-}
 
 #board {
     display: grid;
@@ -177,17 +243,4 @@ h2 {
     text-align: center;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 } 
-.mode.btn:hover {
-    transform: scale(1.05);
-    background: #b8cd6d;
-}
-.brain-btn, .bitsbytes-btn {
-    background: #d06254;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 24px;
-    font-size: 17px;
-    cursor: pointer;
-    margin: 10px;
-    
-}
+
