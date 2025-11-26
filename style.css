@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-    
 
 }
 
@@ -236,7 +235,7 @@ p {
     display: none;
 }
 
-#vibe-switchboard .modal.content {
+#vibe-switchboard .modal-content {
     background:white;
     padding: 10px 24px;
     border-radius: 10px;
