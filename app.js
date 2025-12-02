@@ -1,3 +1,42 @@
+const emoJis = ['🌈', '🦊', '🐝', '🚚', '✨','🌸', '🛑', '🌜', '🐥', '☀️'];
+
+function waterMark() {
+  const wmark = document.createElement('div');
+  wmark.className = 'wmark';
+  wmark.textContent = emoJis[Math.floor(Math.random()* emoJis.length)];
+  
+  wmark.style.left = Math.random() * 100 + '%';
+  wmark.style.animationDelay = Math.random() * 20 + 's';
+  wmark.style.animationDuration = (15 + Math.random() * 10) + 's';
+
+  return wmark
+}
+
+const wmarkContainer = document.querySelector('#wmark-container');
+const numOfWmarks = 10;
+
+for (let i = 0; i < numOfWmarks; i++) {
+  wmarkContainer.appendChild(waterMark());
+}
+
+setInterval(() => {
+  if (wmarkContainer.children.length < 20) {
+    wmarkContainer.appendChild(waterMark());
+  }
+}, 3000);
+
+setInterval(() => {
+  const wmarks = wmarkContainer.querySelectorAll('.wmark');
+  wmarks.forEach(w => {
+    const rect = w.getBoundingClientRect();
+    if (rect.top < -100) {
+      w.remove();
+    }
+  });
+}, 5000);
+
+let pcMedulla = {};
+
 const matchPairedEmojis = [
   ["☀️", "🌈", "Bright Day"],
   ["🦊", "🐥", "Best Friends"],
@@ -39,6 +78,7 @@ let ogPlayerIdx = 0;
 let viewPlayMode = null;
 let endGame = false;
 let pcShot = false;
+
 
 for (let pair of matchPairedEmojis) {
   totalDraw.push(pair[0]);
@@ -144,6 +184,11 @@ function flickEmoji(event) {
 
   quickDraw.classList.add('flicked');
 
+  if (viewPlayMode === 'pc') {
+    const pcDrawIdx = quickDraw.getAttribute('pair');
+    pcMedulla[pcDrawIdx] = quickDraw.textContent;
+  }
+
   if (primeDraw === null) {
     primeDraw = quickDraw;
   } else if (supplemntDraw === null) {
@@ -184,14 +229,14 @@ const combo = twin1
     supplemntDraw = null;
     inquiry = false;
     halt();
-
+    
     setTimeout(() => {
       phraseDisplay.textContent = '';
     }, 2000);
 
     confirmEnd();
 
-    if (!gameDone && viewPlayMode === 'pc' && ogPlayerIdx === 1) {
+    if (!endGame && viewPlayMode === 'pc' && ogPlayerIdx === 1) {
         pcShot = false;
         setTimeout(() => {
           pcShot = true;
@@ -205,7 +250,7 @@ const combo = twin1
     phraseDisplay.textContent = 'Oops! Try Again 🙁';
     phraseDisplay.style.color = '#1f0404ff';
 
-    const delayflick = pcShot ? 2000 : 1000;
+    const delayflick = pcShot ? 2000 : 1500;
 
     setTimeout(() => {
 
@@ -297,7 +342,7 @@ function confirmEnd() {
   }
 }
 function endGameAction() {
-  gameDone = true;
+  endGame = true;
   halt();
 
   const prime1tally = gamerPoints[0];
@@ -335,29 +380,82 @@ function pcMove() {
     return;
   
   }
+let draw1 = null;
+let draw2 = null;
+let mateFound = false
 
+const mindCode = Object.keys(pcMedulla);
+for (let i = 0; i < mindCode.length && !mateFound; i++){
+  for (let j = i + 1; j < mindCode.length; j++) {
+    const draw1Comp = pcMedulla[mindCode[i]];
+    const draw2Comp = pcMedulla[mindCode[j]];
+
+    const mate1 = getMate(draw1Comp);
+    const mate2 = getMate(draw2Comp);
+
+  if (mate1 === mate2 && mate1 !== null) {
+    const draw1Element = document.querySelector(`.hidden-draw[pair="${mindCode[i]}"]:not(.mate):not(.flicked)`);
+    const draw2Element = document.querySelector(`.hidden-draw[pair="${mindCode[j]}"]:not(.mate):not(.flicked)`);
+    
+    if (draw1Element && draw2Element) {
+      draw1 = draw1Element;
+      draw2 = draw2Element;
+      mateFound = true;
+      console.log('MATCH! Keep Going!');
+      break;
+      }
+    }
+  }
+}
+
+if (!mateFound) {
+  if (Math.random() < 0.3 && mindCode.length> 0) {
+    const minIdx = mindCode[Math.floor(Math.random() * mindCode.length)];
+    const minDrw = document.querySelector(`.hidden-draw[pair="${minIdx}"]:not(.mate):not(.flicked)`);
+    if (minDrw) {
+      draw1 = minDrw
+      const exTra = reversePiece.filter(d => d !== draw1);
+      if (exTra.length > 0) {
+        draw2 = exTra[Math.floor(Math.random() * exTra.length)];
+      }
+    }
+  }
+
+  if (!draw1 || !draw2) {
   const shuffleBasedIdx = Math.floor(Math.random() * reversePiece.length);
-  const draw1 = reversePiece[shuffleBasedIdx];
+   draw1 = reversePiece[shuffleBasedIdx];
 
   const leftOver = reversePiece.filter((_, idx) => idx !== shuffleBasedIdx);
+  if (leftOver.length === 0) {
+    pcShot =false;
+    nxtPlayer();
+    return;
+  }
   const shuffleBasedIdx2 = Math.floor(Math.random() * leftOver.length);
-  const draw2 = leftOver[shuffleBasedIdx2];
+  draw2 = leftOver[shuffleBasedIdx2];
+  }
+}
 
-    draw1.classList.add('flicked');
+  draw1.classList.add('flicked');
     primeDraw = draw1;
+
+  const drw1Idx = draw1.getAttribute('pair');
+  pcMedulla[drw1Idx] = draw1.textContent;
 
     beginTime();
 
   setTimeout(() => {
     draw2.classList.add('flicked');
-  if (draw2) {  
     supplemntDraw= draw2;
+
+  const drw2Idx = draw2.getAttribute('pair');
+  pcMedulla[drw2Idx] = draw2.textContent;
     
+  
   setTimeout(() => {
     diagnosis();
 
-    }, 1500);
-   }
+    }, 1500);  
   }, 1500); 
 }
 
@@ -372,9 +470,11 @@ function reboot() {
   ogPlayerIdx = 0;
   endGame = false;
   pcShot = false;
+  pcMedulla = {};
   viewPlayMode = null
 
   clearInterval(timeSpell);
+  timeSpell = null;
 
   totalDraw = [];
   for (let match of matchPairedEmojis) {
